@@ -1,0 +1,116 @@
+
+.panel {
+    width: 100vw;
+    height: 100vh;
+    background-color: #006400;
+    background-image: url('../../../../public/image/background.jpg'); 
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat; 
+}
+h1 {
+    color: white;
+    margin-top: 10px;
+}
+
+.timer {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    top: 5%;
+    left: 80%;
+    height: 70px;
+    width: 100px;
+    background-color: #1f4b1fc4;
+    border-radius: 20px;
+    border: 2px solid 
+}
+
+/* Posiciones de los jugadores */
+.jugador {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Jugador superior */
+.jugador1 {
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column;
+    
+}
+
+/* Jugador inferior */
+.jugador3 {
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column;
+}
+
+/* Jugador izquierdo */
+.jugador4 {
+    left: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    
+}
+.left {
+    display: flex;
+    flex-direction: column;
+}
+.right {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Jugador derecho */
+.jugador2 {
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.carta {
+    width: 80px;
+    margin: 5px;
+}
+
+/* Rotación de las cartas de los jugadores en los lados */
+.jugador2 .carta {
+    transform: rotate(90deg);
+    margin: -20px;
+}
+
+.jugador4 .carta {
+    transform: rotate(-90deg);
+    margin: -20px;
+}
+.name-right{
+    transform: rotate(90deg);
+    margin: 20px;
+}
+
+.container_point{
+    background-color: rgb(66, 65, 64);
+    padding: 10px;
+    border-radius: 20px;
+}
+.name-left{
+    transform: rotate(-90deg);
+    margin: 20px;
+}
+
+/* Cartas en el centro */
+.centro {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+}

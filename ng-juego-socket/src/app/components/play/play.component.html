@@ -1,0 +1,63 @@
+
+
+<div class="panel">
+    <h1 class="timer">00</h1>
+    <!-- Jugador 1 (Arriba) -->
+    <div class="jugador jugador1">
+    
+        <h1>{{name[3]}}  <span class="container_point">12</span></h1>
+                    
+        <div class="cartas">
+            @for (card of cards; track $index) {                
+                <img src="{{card.image}}" alt="Carta 6" class="carta">
+                }
+        </div>
+    </div>
+    
+    <!-- Jugador 2 (Derecha) -->
+    <div class="jugador jugador2">
+        <div class="cartas right">
+            @for (card of cards; track $index) {                
+            <img src="{{card.image}}" alt="Carta 6" class="carta">
+            }
+        
+        </div>
+       
+        <h1 class="name-right" >{{name[3]}}  <span class="container_point">12</span></h1>
+    </div>
+
+    <!-- Jugador 3 (Abajo) -->
+    <div class="jugador jugador3">
+        <div class="cartas">
+            @for (card of cards; track $index) {                
+                <img src="{{card.image}}" alt="Carta 6" class="carta">
+                }
+        </div>
+        <h1>{{name[3]}}  <span class="container_point">12</span></h1>
+        
+    </div>
+
+    <!-- Jugador 4 (Izquierda) -->
+    <div class="jugador jugador4">
+        <h1 class="name-left">{{name[1]}} <span class="container_point">12</span></h1>
+        <div class="cartas left">
+            @for (card of cards; track $index) {                
+                <img src="{{card.image}}" alt="Carta 6" class="carta">
+                }
+        </div>
+        
+    </div>
+    <!-- Área central para cartas jugadas -->
+    <div class="centro">
+        <div>
+            <img src="{{cardBack!.image}}" alt="Carta jugada 1" class="carta">
+            <img src="{{cardBack!.image}}" alt="Carta jugada 2" class="carta">
+        </div>
+    
+        <div>
+            <img src="{{cardBack!.image}}" alt="Carta jugada 1" class="carta">
+            <img src="{{cardBack!.image}}" alt="Carta jugada 2" class="carta">
+        </div>
+    </div>
+</div>
+
