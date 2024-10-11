@@ -14,4 +14,5 @@ public class Game {
     private Integer round;
     private List<Card> cards;
     private Card cardBack;
+    private List<Card> midCards;
 }

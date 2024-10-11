@@ -10,4 +10,5 @@ export interface Game {
     round: number;
     cards: Card[];
     cardBack: Card;
+    midCards: Card[];
 }

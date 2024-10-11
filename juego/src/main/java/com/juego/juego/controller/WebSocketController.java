@@ -45,7 +45,7 @@ public class WebSocketController {
                 return game;
             }
         }
-        Game newGame = new Game(roomID, new ArrayList(), 4, false, true, 0, new ArrayList(), c );
+        Game newGame = new Game(roomID, new ArrayList(), 4, false, true, 0, new ArrayList(), c , new ArrayList() );
         games.add(newGame);
         return newGame;
         

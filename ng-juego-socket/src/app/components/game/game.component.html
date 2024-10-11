@@ -19,7 +19,7 @@
                     
         <div class="cartas">
             @for (card of cardsBackList; track $index) {                
-                <img src="{{card.image}}" alt="Carta 6" class="carta" >
+                <img src="{{card.image}}"  class="carta" >
                 }
         </div>
     </div>
@@ -28,7 +28,7 @@
     <div class="jugador jugador2">
         <div class="cartas right">
             @for (card of cardsBackList; track $index) {                
-            <img src="{{card.image}}" alt="Carta 6" class="carta">
+            <img src="{{card.image}}"  class="carta">
             }
         
         </div>
@@ -40,7 +40,7 @@
     <div class="jugador jugador3">
         <div class="cartas">
             @for (card of player?.hand; track $index) {                
-                <img src="{{card.image}}" alt="Carta 6" class="carta" (click)="useCard()">
+                <img src="{{card.image}}"  class="carta" (click)="useCard(card)">
                 }
         </div>
         <h1>{{nameInput}}<span class="container_point">12</span></h1>
@@ -52,7 +52,7 @@
         <h1 class="name-left">{{enemys[1]}} <span class="container_point">12</span></h1>
         <div class="cartas left">
             @for (card of cardsBackList; track $index) {                
-                <img src="{{card.image}}" alt="Carta 6" class="carta">
+                <img src="{{card.image}}" class="carta">
                 }
         </div>
         
@@ -60,13 +60,9 @@
     <!-- Área central para cartas jugadas -->
     <div class="centro">
         <div>
-            <!-- <img src="{{cardBack!.image}}" alt="Carta jugada 1" class="carta">
-            <img src="{{cardBack!.image}}" alt="Carta jugada 2" class="carta"> -->
-        </div>
-    
-        <div>
-            <!-- <img src="{{cardBack!.image}}" alt="Carta jugada 1" class="carta">
-            <img src="{{cardBack!.image}}" alt="Carta jugada 2" class="carta"> -->
+            @for (card of midCards; track $index) {                
+                <img src="{{card.image}}" class="carta">
+                }
         </div>
     </div>
 </div>
