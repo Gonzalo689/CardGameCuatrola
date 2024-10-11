@@ -18,8 +18,8 @@
         <h1>{{player!.ally?.name}}  <span class="container_point">12</span></h1>
                     
         <div class="cartas">
-            @for (card of cardsBackList; track $index) {                
-                <img src="{{card.image}}"  class="carta" >
+            @for (card of player!.ally?.hand; track $index) {                
+                <img src="{{game?.cardBack?.image}}"  class="carta" >
                 }
         </div>
     </div>
@@ -27,13 +27,13 @@
     <!-- Jugador 2 (Derecha) -->
     <div class="jugador jugador2">
         <div class="cartas right">
-            @for (card of cardsBackList; track $index) {                
-            <img src="{{card.image}}"  class="carta">
+            @for (card of enemys[0].hand; track $index) {                
+            <img src="{{game?.cardBack?.image}}"  class="carta">
             }
         
         </div>
        
-        <h1 class="name-right" >{{enemys[0]}}<span class="container_point">12</span></h1>
+        <h1 class="name-right" >{{enemys[0].name}}<span class="container_point">12</span></h1>
     </div>
 
     <!-- Jugador 3 (Abajo) -->
@@ -49,10 +49,10 @@
 
     <!-- Jugador 4 (Izquierda) -->
     <div class="jugador jugador4">
-        <h1 class="name-left">{{enemys[1]}} <span class="container_point">12</span></h1>
+        <h1 class="name-left">{{enemys[1].name}} <span class="container_point">12</span></h1>
         <div class="cartas left">
-            @for (card of cardsBackList; track $index) {                
-                <img src="{{card.image}}" class="carta">
+            @for (card of enemys[1].hand; track $index) {                
+                <img src="{{game?.cardBack?.image}}" class="carta">
                 }
         </div>
         

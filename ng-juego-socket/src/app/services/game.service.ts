@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
-import { User } from '../models/user';
 import { Game } from '../models/game';
 import { GameDataService } from './game-data.service';
 import { Card } from '../models/card';
-import {BehaviorSubject, Observable, Subject } from 'rxjs';
+import {BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +13,8 @@ export class GameService {
   private stompClient: any;
   private roomID: string | null = null;
   private game: Game | null = null;
-  private cardsBackList: Card[] = [];
   private gameSubject: BehaviorSubject<any> = new BehaviorSubject(null);
   public gameUpdates$: Observable<any> = this.gameSubject.asObservable();
-
-  
-   
-
 
   constructor(private gameData: GameDataService) {
     // Initialize the Stomp client
@@ -129,15 +123,7 @@ export class GameService {
     return deck;
   }
 
-  getCardsBack(): Card[] {
-    const card = this.game!.cardBack;
-    console.log("Card back:", card);
-    for (let i = 0; i < 5; i++) {
-      this.cardsBackList.push(card!);
-    }
-    console.log("Card back list:", this.cardsBackList);
-    return this.cardsBackList;
-  }
+  
 
   
 }
