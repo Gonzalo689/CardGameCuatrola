@@ -55,11 +55,7 @@ export class GameComponent implements OnInit, OnChanges {
       this.game = updatedGame;
       console.log('Game updated:', this.game); 
       if(this.game?.players.length === 4 ) {
-        if(this.game!.ended === true){
-          this.cardsBackList = this.gameService.getCardsBack();  // recarga las 5 cardBack
-          this.asignedTeams();
-          this.game!.ended = false;
-        }
+        this.resetGame();
         this.getPlayer(this.game!);// obtiene el player actual con todas sus actualizaciones
       }
     });
@@ -114,33 +110,21 @@ export class GameComponent implements OnInit, OnChanges {
     this.playerID = this.game.players.length.toString();
     this.player = {id : this.playerID, name: this.nameInput, hand: [], ally: null, scoreCard: [], score: 0};
     this.game.players.push(this.player);
-    this.resetGame();
+    
     this.gameService.sendGameUpdate(this.game!);  
     this.visibilityStarted = true;
   }
-  resetGame(): void {
-    if(this.game!.players.length === 4) {
-      this.game!.started = true;
-      this.dealCards(this.game!.cards!);
-      this.game!.round = 1;
-      
-    }
-  }
-  ngOnDestroy(): void {
-    this.gameService.disconnect();
-    if (this.gameSubscription) {
-      this.gameSubscription.unsubscribe(); // Desuscribirse para evitar fugas de memoria
-    }
-  }
-  getPlayer(game: Game) {
-    game.players.forEach((player) => {
-      if(player.id === this.playerID) {
-        this.player = player;
-        return
-      }
-    })
-  }
 
+  resetGame(): void {
+    if(this.game!.ended === true){
+      this.cardsBackList = this.gameService.getCardsBack();  // recarga las 5 cardBack
+      this.asignedTeams();
+      this.dealCards(this.game!.cards!);
+      this.game!.ended = false;
+      this.game!.round = 1;
+      this.gameService.sendGameUpdate(this.game!);  
+    }
+  }
   dealCards(Cards: Card[]): void { 
     var cardsTotals = this.gameService.shuffleDeck(Cards); 
     let cardIndex = 0; // Índice para llevar el control de las cartas repartidas
@@ -150,6 +134,20 @@ export class GameComponent implements OnInit, OnChanges {
       player.hand = cardsTotals.slice(cardIndex, cardIndex + 5); 
       cardIndex += 5; 
     });
+  }
+  getPlayer(game: Game) {
+    game.players.forEach((player) => {
+      if(player.id === this.playerID) {
+        this.player = player;
+        return
+      }
+    })
+  }
+  ngOnDestroy(): void {
+    this.gameService.disconnect();
+    if (this.gameSubscription) {
+      this.gameSubscription.unsubscribe(); // Desuscribirse para evitar fugas de memoria
+    }
   }
   
 }
