@@ -54,6 +54,7 @@ export class GameComponent implements OnInit, OnChanges {
       console.log('Game updated:', this.game); 
       if(this.game?.players.length === 4) {
         this.getPlayer(this.game!);
+        this.cardsBackList = this.gameService.getCardsBack();
       }
     });
 
@@ -106,9 +107,6 @@ export class GameComponent implements OnInit, OnChanges {
       player.hand = cardsTotals.slice(cardIndex, cardIndex + 5); 
       cardIndex += 5; 
     });
-
-    this.cardsBackList = this.gameService.getCardsBack(); // cargar una lista de cartas para que no se vea visualmente y usarla mas adelante
-
   }
   
 }
