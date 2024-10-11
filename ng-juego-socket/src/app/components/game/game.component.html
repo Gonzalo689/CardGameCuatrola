@@ -15,11 +15,11 @@
     <!-- Jugador 1 (Arriba) -->
     <div class="jugador jugador1">
     
-        <h1>{{nameInput}}  <span class="container_point">12</span></h1>
+        <h1>{{player!.ally?.name}}  <span class="container_point">12</span></h1>
                     
         <div class="cartas">
             @for (card of cardsBackList; track $index) {                
-                <img src="{{card.image}}" alt="Carta 6" class="carta">
+                <img src="{{card.image}}" alt="Carta 6" class="carta" >
                 }
         </div>
     </div>
@@ -33,23 +33,23 @@
         
         </div>
        
-        <h1 class="name-right" >{{nameInput}}  <span class="container_point">12</span></h1>
+        <h1 class="name-right" >{{enemys[0]}}<span class="container_point">12</span></h1>
     </div>
 
     <!-- Jugador 3 (Abajo) -->
     <div class="jugador jugador3">
         <div class="cartas">
             @for (card of player?.hand; track $index) {                
-                <img src="{{card.image}}" alt="Carta 6" class="carta">
+                <img src="{{card.image}}" alt="Carta 6" class="carta" (click)="useCard()">
                 }
         </div>
-        <h1>{{nameInput}}  <span class="container_point">12</span></h1>
+        <h1>{{nameInput}}<span class="container_point">12</span></h1>
         
     </div>
 
     <!-- Jugador 4 (Izquierda) -->
     <div class="jugador jugador4">
-        <h1 class="name-left">{{nameInput}} <span class="container_point">12</span></h1>
+        <h1 class="name-left">{{enemys[1]}} <span class="container_point">12</span></h1>
         <div class="cartas left">
             @for (card of cardsBackList; track $index) {                
                 <img src="{{card.image}}" alt="Carta 6" class="carta">

@@ -26,6 +26,8 @@ export class GameComponent implements OnInit, OnChanges {
   player: User | null = null;
   playerID: string = '';
   cardsBackList: Card[] = [];
+  // ally: string = 'none';
+  enemys: string[] = [];
 
   private gameSubscription: Subscription = new Subscription();
   constructor(
@@ -52,14 +54,53 @@ export class GameComponent implements OnInit, OnChanges {
 
       this.game = updatedGame;
       console.log('Game updated:', this.game); 
-      if(this.game?.players.length === 4) {
-        this.getPlayer(this.game!);
-        this.cardsBackList = this.gameService.getCardsBack();
+      if(this.game?.players.length === 4 ) {
+        if(this.game!.ended === true){
+          this.cardsBackList = this.gameService.getCardsBack();  // recarga las 5 cardBack
+          this.asignedTeams();
+          this.game!.ended = false;
+        }
+        this.getPlayer(this.game!);// obtiene el player actual con todas sus actualizaciones
       }
     });
 
   }
 
+  useCard(){
+    if(this.yourTurn()){
+      alert('Is your turn!');
+    }else{
+      alert('is not your turn!');
+    }
+    this.gameService.sendGameUpdate(this.game!);  
+  }
+  yourTurn(){
+    return this.playerID === this.game!.round.toString();
+  }
+  asignedTeams(){
+    switch (this.playerID) {
+      case '0':
+        this.game!.players[0].ally = this.game!.players[2];
+        // this.ally = this.game!.players[2].name;
+        this.enemys = [this.game!.players[1].name, this.game!.players[3].name];
+        break;
+      case '1':
+        this.game!.players[1].ally = this.game!.players[3];
+        // this.ally = this.game!.players[3].name;
+        this.enemys = [this.game!.players[2].name, this.game!.players[0].name];
+        break;
+      case '2':
+        this.game!.players[2].ally = this.game!.players[0];
+        // this.ally = this.game!.players[0].name;
+        this.enemys = [this.game!.players[3].name, this.game!.players[1].name];
+        break;
+      case '3':
+        this.game!.players[3].ally = this.game!.players[1];
+        // this.ally = this.game!.players[1].name;
+        this.enemys = [this.game!.players[0].name, this.game!.players[2].name];
+        break;
+    }
+  }
 
   sendUpdatetoStart(): void {
     if(this.game!.cards!.length <= 1) {
@@ -71,7 +112,7 @@ export class GameComponent implements OnInit, OnChanges {
       return;
     }
     this.playerID = this.game.players.length.toString();
-    this.player = {id : this.playerID, name: this.nameInput, hand: []};
+    this.player = {id : this.playerID, name: this.nameInput, hand: [], ally: null, scoreCard: [], score: 0};
     this.game.players.push(this.player);
     this.resetGame();
     this.gameService.sendGameUpdate(this.game!);  
@@ -81,6 +122,8 @@ export class GameComponent implements OnInit, OnChanges {
     if(this.game!.players.length === 4) {
       this.game!.started = true;
       this.dealCards(this.game!.cards!);
+      this.game!.round = 1;
+      
     }
   }
   ngOnDestroy(): void {
