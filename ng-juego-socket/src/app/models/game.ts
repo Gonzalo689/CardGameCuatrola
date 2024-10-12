@@ -5,10 +5,12 @@ export interface Game {
     id: string;
     players: User[];
     necesaryPlayers: number;
-    started: boolean;
+    roundReset: boolean;
     ended: boolean;
     round: number;
     cards: Card[];
     cardBack: Card;
     midCards: Card[];
+    pinte : Card | null;
+    whoWin : User | null;
 }

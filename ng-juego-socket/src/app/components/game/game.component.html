@@ -5,9 +5,9 @@
 
 <div [hidden]="!visibilityStarted">
    
-    @if (player?.hand!.length < 1 && enemys[1].hand!.length < 1) {
+    @if (player?.hand!.length < 1 ) {
         <h1>Esperando Jugadores</h1>
-    }@else {
+    }@else{
         
 
         <div class="panel">
@@ -58,8 +58,11 @@
                 
             </div>
             <!-- Área central para cartas jugadas -->
-            <div class="centro">
-                <div>
+            <div class="centro" >
+                <div id="midCards">
+                    @if (pinte) {
+                        <img src="{{pinte.image}}" class="carta" id="pinte">
+                    }
                     @for (card of midCards; track $index) {                
                         <img src="{{card.image}}" class="carta">
                         }

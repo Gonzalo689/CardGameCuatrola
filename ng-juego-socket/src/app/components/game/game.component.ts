@@ -27,6 +27,8 @@ export class GameComponent implements OnInit, OnChanges {
   playerID: string = '';
   enemys: User[] = [];
   midCards: Card[] = [];
+  pinte: Card | null = null;
+
 
   private gameSubscription: Subscription = new Subscription();
   constructor(
@@ -56,8 +58,17 @@ export class GameComponent implements OnInit, OnChanges {
       if(this.game?.players.length === 4 ) {
         this.resetGame();
         this.asignedTeams();  // por ahora solo es esta inecesaria si hay mas hacer otra subcrición
+        this.pinte = this.game!.pinte;
         this.getPlayer(this.game!);
         this.midCards= this.game!.midCards;
+
+        setTimeout(() => {
+          this.deleteElement();
+        }, 5000);
+        // setTimeout(() => {
+        //   this.createElement();
+        // }, 10000);
+        this.winnerRound();
       }
 
     });
@@ -75,7 +86,75 @@ export class GameComponent implements OnInit, OnChanges {
     this.gameService.sendGameUpdate(this.game!);  
   }
   yourTurn(){
-    return this.playerID === this.game!.round.toString();
+    const playerIndex: number = parseInt(this.game!.whoWin!.id, 10);
+    const thisPlayerIndex: number = parseInt(this.playerID, 10);
+    return thisPlayerIndex === (playerIndex + this.game!.midCards.length) % 4;
+  }
+
+  // TODO Calcular el jugador que gana la ronda mediante la mejor carta
+  winnerRound(){
+    if(this.game!.midCards.length === 4){
+      var betterCard : Card = this.game!.midCards[0];
+      var index = 0;
+      for (let i = 1; i < this.game!.midCards.length; i++) {
+        var card = this.game!.midCards[i];
+        betterCard = this.compareCard(card, betterCard);
+        if(betterCard === card){
+          index = i;
+        }
+        
+      }
+
+
+      this.game!.whoWin = this.game!.players[(index) % 4]; // mal y es difisi
+      this.game!.midCards = [];
+      this.gameService.sendGameUpdate(this.game!); 
+      alert(`la mejor carta fue ${betterCard.suit} ${betterCard.numero}`);
+    }
+  }
+  
+  compareCard(card: Card, card2: Card): Card  {
+    if (card.suit === this.game!.pinte!.suit && card2.suit !== this.game!.pinte!.suit ){
+      return card;
+    } 
+    if (card.suit !== this.game!.pinte!.suit && card2.suit === this.game!.pinte!.suit ){
+      return card2;
+    }  
+    if (card.suit === this.game!.midCards[0].suit && card2.suit !== this.game!.midCards[0].suit ){
+      return card;
+    } 
+    if (card.suit !== this.game!.midCards[0].suit && card2.suit === this.game!.midCards[0].suit ){
+      return card2;
+    }    
+    
+    if (card.valor < card2.valor) {
+      return card2;
+    }
+    return card;
+    
+  }
+
+
+  deleteElement(){
+    const elemento = document.getElementById('pinte');
+    if (elemento) {
+        elemento.remove();
+    }
+  }
+  
+  createElement() {
+    
+    const img = document.createElement('img');
+    img.src = this.game!.pinte!.image; 
+    img.classList.add('carta');
+    img.id = 'pinte';
+  
+    
+    const elemento = document.getElementById('midCards');
+    if (elemento) {
+      elemento.appendChild(img);
+    }
+
   }
   asignedTeams(){
     const playerIndex: number = parseInt(this.playerID, 10);
@@ -120,10 +199,19 @@ export class GameComponent implements OnInit, OnChanges {
     if(this.game!.ended === true){
       this.dealCards(this.game!.cards!);
       this.game!.ended = false;
-      this.game!.round = 1;
+      this.getPinte();
+      this.game!.whoWin = this.game!.players[(this.game!.round) % 4]
+      this.game!.midCards = [];
       this.gameService.sendGameUpdate(this.game!);  
     }
   }
+  getPinte(): void {
+    this.game!.pinte = this.game!.players[(this.game!.round+3) % 4].hand[4];
+  }
+
+  
+
+ 
   dealCards(Cards: Card[]): void { 
     var cardsTotals = this.gameService.shuffleDeck(Cards); 
     let cardIndex = 0; // Índice para llevar el control de las cartas repartidas
