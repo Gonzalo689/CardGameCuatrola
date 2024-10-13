@@ -104,12 +104,14 @@ export class GameComponent implements OnInit, OnChanges {
         }
         
       }
-
-
-      this.game!.whoWin = this.game!.players[(index) % 4]; // mal y es difisi
+      const whoWinIndex: number = parseInt(this.game!.whoWin!.id, 10);
+      this.game!.whoWin = this.game!.players[( whoWinIndex + index ) % 4]; // mal y es difisi
       this.game!.midCards = [];
+      
+      
       this.gameService.sendGameUpdate(this.game!); 
-      alert(`la mejor carta fue ${betterCard.suit} ${betterCard.numero}`);
+      
+      
     }
   }
   
